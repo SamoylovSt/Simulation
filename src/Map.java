@@ -4,6 +4,7 @@ public class Map {
     HashMap<Coordinates,Entyty> map = new HashMap<>();
 
 
+
     public void setEntyty(Coordinates coordinates,Entyty entyty){
         map.put(coordinates, entyty);
     }
