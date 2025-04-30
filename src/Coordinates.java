@@ -1,23 +1,34 @@
 import java.util.Objects;
 
 public class Coordinates {
-public final Integer x;
-public final Integer y;
+public final Integer COLUMN;
+public final Integer ROW;
 
-    public Coordinates(Integer x, Integer y) {
-        this.x = x;
-        this.y = y;
+    public Coordinates(Integer COLUMN, Integer ROW) {
+        this.COLUMN = COLUMN; //row
+        this.ROW = ROW; //column
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Coordinates that = (Coordinates) o;
-        return Objects.equals(x, that.x) && Objects.equals(y, that.y);
+        return Objects.equals(COLUMN, that.COLUMN) && Objects.equals(ROW, that.ROW);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(COLUMN, ROW);
     }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Coordinates that = (Coordinates) o;
+//        return Objects.equals(COLUMN, that.COLUMN) && Objects.equals(ROW, that.ROW);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(COLUMN, ROW);
+//    }
 }

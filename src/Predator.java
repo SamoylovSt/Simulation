@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Set;
+
 public class Predator extends Creature {
     private String color = "\uD83D\uDC3A";
     private Coordinates coordinates;
@@ -20,82 +23,55 @@ public class Predator extends Creature {
         this.color = "\uD83D\uDC3A";
     }
 
+    public void eatHerbivore(Coordinates targetCoordinates, Coordinates predatorCoordinates, Map map, List<Herbivore> rabits) {
+        if (predatorCoordinates.equals(targetCoordinates) && map.getEntyty(targetCoordinates) instanceof Herbivore) {
+                rabits.remove(map.getEntyty(targetCoordinates));
+            map.deleteEntyty(targetCoordinates);
+        }
+
+    }
+
 
 
     public Coordinates makeMove(Predator predator, Coordinates targetCoordinates, Map map) {//
 
-        int dx = (int) Math.signum(targetCoordinates.x - predator.coordinates.x);
-        int dy = (int) Math.signum(targetCoordinates.y - predator.coordinates.y);
+        int dx = (int) Math.signum(targetCoordinates.COLUMN - predator.coordinates.COLUMN);
+        int dy = (int) Math.signum(targetCoordinates.ROW - predator.coordinates.ROW);
         //  return predator.coordinates=new Coordinates(predator.coordinates.x + dx, predator.coordinates.y + dy);
 
-        Entyty nextTurnentyty = map.getEntyty(new Coordinates(predator.coordinates.x + dx, predator.coordinates.y + dy));
+        Entyty nextTurnentyty = map.getEntyty(new Coordinates(predator.coordinates.COLUMN + dx, predator.coordinates.ROW + dy));
 
-        if(predator.coordinates.x + dx>10  || predator.coordinates.y + dy>10
-                || predator.coordinates.x +dx<1 || predator.coordinates.y +dy<1 ){
-            return predator.coordinates = new Coordinates(predator.coordinates.x , predator.coordinates.y );
+
+        if (predator.coordinates.COLUMN +dx>10){
+            dx=0;
         }
+        if (predator.coordinates.COLUMN +dx<1){
+            dx=0;
+        }
+        if (predator.coordinates.ROW +dy>10){
+            dy=0;
+        }
+        if (predator.coordinates.ROW +dy<1){
+            dy=0;
+        }
+//
 
-
-        if (nextTurnentyty instanceof Rock || nextTurnentyty instanceof Predator) {//
-            if (nextTurnentyty.getCoordinates().x > predator.coordinates.x) {
-                return predator.coordinates = new Coordinates(predator.coordinates.x, predator.coordinates.y + 1);
+        if (nextTurnentyty instanceof Rock || nextTurnentyty instanceof Predator |nextTurnentyty instanceof Grass) {//
+            if (nextTurnentyty.getCoordinates().COLUMN > predator.coordinates.COLUMN) {
+                return predator.coordinates = new Coordinates(predator.coordinates.COLUMN, predator.coordinates.ROW + 1);
             }
-            if (nextTurnentyty.getCoordinates().y > predator.coordinates.y) {
-                return predator.coordinates = new Coordinates(predator.coordinates.x + 1, predator.coordinates.y);
+            if (nextTurnentyty.getCoordinates().ROW > predator.coordinates.ROW) {
+                return predator.coordinates = new Coordinates(predator.coordinates.COLUMN - 1, predator.coordinates.ROW);
             }
-            if (nextTurnentyty.getCoordinates().y < predator.coordinates.y) {
-                return predator.coordinates = new Coordinates(predator.coordinates.x +1, predator.coordinates.y); // тут изменял
+            if (nextTurnentyty.getCoordinates().ROW < predator.coordinates.ROW) {
+                return predator.coordinates = new Coordinates(predator.coordinates.COLUMN -1, predator.coordinates.ROW); // тут изменял
             }
-            if (nextTurnentyty.getCoordinates().x < predator.coordinates.x) {
-                return predator.coordinates = new Coordinates(predator.coordinates.x -1, predator.coordinates.y + 1);
+            if (nextTurnentyty.getCoordinates().COLUMN < predator.coordinates.COLUMN) {
+                return predator.coordinates = new Coordinates(predator.coordinates.COLUMN -1, predator.coordinates.ROW + 1);
             }
 
 
         }
-        return predator.coordinates = new Coordinates(predator.coordinates.x + dx, predator.coordinates.y + dy);
+        return predator.coordinates = new Coordinates(predator.coordinates.COLUMN + dx, predator.coordinates.ROW + dy);
     }
-        // все что ниже работает точно также
-//                int newPredCoordsX = predator.coordinates.x;
-//        int newPredCoordsY = predator.coordinates.y;
-//
-//        if (predator.getCoordinates().x > targetCoordinates.x && predator.getCoordinates().y == targetCoordinates.y) {
-//
-//            newPredCoordsX = predator.coordinates.x - 1;
-//            newPredCoordsY = predator.coordinates.y;
-//        } else if (predator.getCoordinates().x < targetCoordinates.x && predator.getCoordinates().y == targetCoordinates.y) {
-//
-//            newPredCoordsX = predator.coordinates.x + 1;
-//            newPredCoordsY = predator.coordinates.y;
-//        } else if (predator.getCoordinates().x == targetCoordinates.x && predator.getCoordinates().y < targetCoordinates.y) {
-//
-//            newPredCoordsX = predator.coordinates.x;
-//            newPredCoordsY = predator.coordinates.y + 1;
-//        } else if (predator.getCoordinates().x == targetCoordinates.x && predator.getCoordinates().y > targetCoordinates.y) {
-//
-//            newPredCoordsX = predator.coordinates.x;
-//            newPredCoordsY = predator.coordinates.y - 1;
-//        } else if (predator.getCoordinates().x < targetCoordinates.x && predator.getCoordinates().y < targetCoordinates.y) {
-//
-//            newPredCoordsX = predator.coordinates.x + 1;
-//            newPredCoordsY = predator.coordinates.y + 1;
-//        } else if (predator.getCoordinates().x > targetCoordinates.x && predator.getCoordinates().y > targetCoordinates.y) {
-//
-//            newPredCoordsX = predator.coordinates.x - 1;
-//            newPredCoordsY = predator.coordinates.y - 1;
-//        } else if (predator.getCoordinates().x < targetCoordinates.x && predator.getCoordinates().y > targetCoordinates.y) {
-//
-//            newPredCoordsX = predator.coordinates.x + 1;
-//            newPredCoordsY = predator.coordinates.y - 1;
-//        } else if (predator.getCoordinates().x > targetCoordinates.x && predator.getCoordinates().y < targetCoordinates.y) {
-//
-//            newPredCoordsX = predator.coordinates.x - 1;
-//            newPredCoordsY = predator.coordinates.y + 1;
-//        }
-//
-//        return predator.coordinates = new Coordinates(newPredCoordsX, newPredCoordsY);
-
-
-
-
-
-}
+  }

@@ -3,7 +3,9 @@ import java.util.HashMap;
 public class Map {
     HashMap<Coordinates,Entyty> map = new HashMap<>();
 
-
+public  void reMap(HashMap<Coordinates,Entyty> newMap){
+  this.map=newMap;
+}
 
     public void setEntyty(Coordinates coordinates,Entyty entyty){
         map.put(coordinates, entyty);

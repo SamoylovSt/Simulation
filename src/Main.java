@@ -15,6 +15,6 @@ public class Main {
        mapRenderer.startSimulation();
      //   mapRenderer.poisk(predator, map);
 
-
+int f =1;
     }
 }
