@@ -1,8 +1,7 @@
-import java.util.List;
-import java.util.Set;
+import java.util.HashSet;
 
 public class Predator extends Creature {
-    private String color = "\uD83D\uDC3A";
+    private String color ;
     private Coordinates coordinates;
 
 
@@ -23,7 +22,7 @@ public class Predator extends Creature {
         this.color = "\uD83D\uDC3A";
     }
 
-    public void eatHerbivore(Coordinates targetCoordinates, Coordinates predatorCoordinates, Map map, List<Herbivore> rabits) {
+    public void eatHerbivore(Coordinates targetCoordinates, Coordinates predatorCoordinates, Map map, HashSet<Herbivore> rabits) {
         if (predatorCoordinates.equals(targetCoordinates) && map.getEntyty(targetCoordinates) instanceof Herbivore) {
                 rabits.remove(map.getEntyty(targetCoordinates));
             map.deleteEntyty(targetCoordinates);
@@ -42,13 +41,13 @@ public class Predator extends Creature {
         Entyty nextTurnentyty = map.getEntyty(new Coordinates(predator.coordinates.COLUMN + dx, predator.coordinates.ROW + dy));
 
 
-        if (predator.coordinates.COLUMN +dx>10){
+        if (predator.coordinates.COLUMN +dx>20){
             dx=0;
         }
         if (predator.coordinates.COLUMN +dx<1){
             dx=0;
         }
-        if (predator.coordinates.ROW +dy>10){
+        if (predator.coordinates.ROW +dy>20){
             dy=0;
         }
         if (predator.coordinates.ROW +dy<1){

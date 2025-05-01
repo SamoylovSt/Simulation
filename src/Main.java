@@ -11,10 +11,11 @@ public class Main {
 
 //        map.setEntyty(new Coordinates(1, 1), predator);
 //        map.setEntyty(new Coordinates(5, 10), her);
+      //  mapRenderer.initStartAction(map);
+        mapRenderer.startSimulation();
 
-       mapRenderer.startSimulation();
-     //   mapRenderer.poisk(predator, map);
+        //   mapRenderer.poisk(predator, map);
 
-int f =1;
+
     }
 }
