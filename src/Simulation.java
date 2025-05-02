@@ -108,38 +108,31 @@ public class Simulation {
                 {+0, +1}, {-1, +1}, {-1, +0}, {-1, -1}
         };
         int clearCootdCount = 0;
-        if (turnCount % 2 == 0) {
+        if (turnCount % 4 == 0) {
             for (int i = 0; i < nearestCootdinates.length; i++) {
-            int newRow = nearestCootdinates[i][1];
-            int newCol = nearestCootdinates[i][0];
+                int newRow = nearestCootdinates[i][1];
+                int newCol = nearestCootdinates[i][0];
 
-            if (!map.emptyCoordainates(new Coordinates(ROW + newCol, COLUMN + newRow)) &&
-                    !map.emptyCoordainates(new Coordinates(ROW , COLUMN))) {
+                Coordinates checkEmptyCoordinates1 = new Coordinates(ROW + newCol, COLUMN + newRow);
+                Coordinates checkEmptyCoordinates2 = new Coordinates(ROW, COLUMN);
+                if (!map.emptyCoordainates(checkEmptyCoordinates1) &&
+                        !map.emptyCoordainates(checkEmptyCoordinates2)) {
 
-                clearCootdCount++;
+                    clearCootdCount++;
 
-            }else {
-                clearCootdCount=0;
-            }
-            if (clearCootdCount == 8 ) {
+                } else {
+                    clearCootdCount = 0;
+                }
+                if (clearCootdCount == 8) {
 
-                Herbivore newRabit = new Herbivore(new Coordinates(COLUMN, ROW));
-                map.setEntyty(new Coordinates(COLUMN, ROW), newRabit);
-                rabits.add(newRabit);
-                clearCootdCount=0;
+                    Herbivore newRabit = new Herbivore(new Coordinates(COLUMN, ROW));
+                    map.setEntyty(new Coordinates(COLUMN, ROW), newRabit);
+                    rabits.add(newRabit);
+                    clearCootdCount = 0;
+                }
             }
         }
-        }
 
-//        if (turnCount % 4 == 0) {
-//            Random random = new Random();
-//            int COLUMN = random.nextInt(10) + 1;
-//            int ROW = random.nextInt(10) + 1;
-//
-//            Herbivore newRabit = new Herbivore(new Coordinates(COLUMN, ROW));
-//            map.setEntyty(new Coordinates(COLUMN, ROW), newRabit);
-//            rabits.add(newRabit);
-//        }
 
 
         //зайцы из списка ходят  и едят по очереди
@@ -191,8 +184,8 @@ public class Simulation {
 
     public Coordinates poisk(Entyty creature, Map m) {
 
-        ArrayDeque<Coordinates> queue = new ArrayDeque<>();
-
+        // ArrayDeque<Coordinates> queue = new ArrayDeque<>();
+        LinkedList<Coordinates> queue = new LinkedList<>();
         int[][] directions = {
                 {+1, +0}, {+0, -1}, {+1, +1}, {+1, -1},
                 {+0, +1}, {-1, +1}, {-1, +0}, {-1, -1}
@@ -210,9 +203,9 @@ public class Simulation {
         Coordinates targetCoordinates = new Coordinates(0, 0);
 
         while (!queue.isEmpty()) {
-            queue.removeFirst();
-            Coordinates nextCoordinates = queue.getFirst();
-
+            // queue.removeFirst();
+            //Coordinates nextCoordinates = queue.getFirst();
+            Coordinates nextCoordinates = queue.removeFirst();
             if (m.emptyCoordainates(nextCoordinates) && creature instanceof Herbivore && m.getEntyty(nextCoordinates) instanceof Grass) {
                 targetCoordinates = new Coordinates(nextCoordinates.COLUMN, nextCoordinates.ROW);
                 break;
@@ -226,11 +219,18 @@ public class Simulation {
                 for (int i = 0; i < directions.length; i++) {
                     int newRow = directions[i][1];
                     int newCol = directions[i][0];
-                    if (!visited.contains(new Coordinates(nextCoordinates.COLUMN + newCol, nextCoordinates.ROW + newRow))) {
-                        queue.add(new Coordinates(nextCoordinates.COLUMN + newCol, nextCoordinates.ROW + newRow));
-
+                   Coordinates temp= new Coordinates(nextCoordinates.COLUMN + newCol, nextCoordinates.ROW + newRow);
+                    if (!visited.contains(temp)) {
+                       queue.add(temp);
                     }
+                    //229 строка ошибка
+//
+//                    if (!visited.contains(new Coordinates(nextCoordinates.COLUMN + newCol, nextCoordinates.ROW + newRow))) {
+//                        queue.add(new Coordinates(nextCoordinates.COLUMN + newCol, nextCoordinates.ROW + newRow));
+//                        //229 строка ошибка
+//                    }
                 }
+
 
             }
         }
